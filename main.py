@@ -10,11 +10,11 @@ import pathlib
 import shutil
 
 def clear():
-    for f in os.listdir('storage'):
+    for f in os.listdir('tmp'):
         if not f.endswith(".pdf"):
             continue
         try:
-            os.remove(os.path.join('storage', f))
+            os.remove(os.path.join('tmp', f))
         except:
             pass
 def reset():
@@ -96,8 +96,8 @@ def printEnvelope(des, notSend, name):
         c.drawString(xNotsend, yNotsend, '( ' + name + ' )')
     c.save()
     shutil.move(str(pathlib.Path().resolve()) + '\\' + filename,
-                str(pathlib.Path().resolve()) + "\\storage\\" + filename)
-    os.startfile(str(pathlib.Path().resolve()) + "\\storage\\" + filename)
+                str(pathlib.Path().resolve()) + "\\tmp\\" + filename)
+    os.startfile(str(pathlib.Path().resolve()) + "\\tmp\\" + filename)
 
 
 def printA4(des, notSend, name):
@@ -152,5 +152,5 @@ def printA4(des, notSend, name):
         c.drawCentredString(xNotsend, yNotsend, '( ' + name + ' )')
     c.save()
     shutil.move(str(pathlib.Path().resolve()) + '\\' + filename,
-                str(pathlib.Path().resolve()) + "\\storage\\" + filename)
-    os.startfile(str(pathlib.Path().resolve()) + "\\storage\\" + filename)
+                str(pathlib.Path().resolve()) + "\\tmp\\" + filename)
+    os.startfile(str(pathlib.Path().resolve()) + "\\tmp\\" + filename)
