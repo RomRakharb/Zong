@@ -9,6 +9,7 @@ import time
 import pathlib
 import shutil
 
+
 def clear():
     for f in os.listdir('tmp'):
         if not f.endswith(".pdf"):
@@ -17,6 +18,8 @@ def clear():
             os.remove(os.path.join('tmp', f))
         except:
             pass
+
+
 def reset():
     df = pandas.read_excel('zong.xlsx')
     name_list = []
@@ -115,19 +118,19 @@ def printA4(des, notSend, name):
     x_max = 842
     y_max = 595
     xSender = 50
-    ySender = y_max-150
-    xPreReceiver = x_max/2 - 100
-    xReceiver = x_max/2 - 50
-    yReceiver = y_max/2
+    ySender = y_max - 150
+    xPreReceiver = x_max / 2 - 100
+    xReceiver = x_max / 2 - 50
+    yReceiver = y_max / 2
     xStamp = x_max - 150
     yStamp = y_max - 80
     xRect = x_max - 250
     yRect = y_max - 150
-    xNotsend = x_max/2
-    yNotsend = y_max/4
+    xNotsend = x_max / 2
+    yNotsend = y_max / 4
     spacing = 25
     c.rect(20, 20, 802, 555)
-    c.drawImage('garuda.png', 50, y_max-175, 50, mask='auto', preserveAspectRatio=True)
+    c.drawImage('garuda.png', 50, y_max - 175, 50, mask='auto', preserveAspectRatio=True)
     for i in range(6):
         try:
             c.drawString(xSender, ySender, sender[i + 1])

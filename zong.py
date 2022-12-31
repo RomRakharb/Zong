@@ -2,14 +2,15 @@ import os
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import QMessageBox, QInputDialog
+
 from main import reset, selectedItem, printEnvelope, printA4, saveItem, deleteAction, clear
 
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1000, 500)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+    def setupUi(self, main_window):
+        main_window.setObjectName("MainWindow")
+        main_window.resize(1000, 500)
+        self.centralwidget = QtWidgets.QWidget(main_window)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.gridLayoutWidget.setGeometry(QtCore.QRect(50, 25, 900, 400))
@@ -147,8 +148,8 @@ class Ui_MainWindow(object):
         self.listWidget.addItems(reset())
         self.gridLayout.addWidget(self.listWidget, 0, 1, 1, 1)
 
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        main_window.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(main_window)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 798, 30))
         font = QtGui.QFont()
         font.setFamily("TH Sarabun New")
@@ -161,17 +162,17 @@ class Ui_MainWindow(object):
         font.setPointSize(18)
         self.menuFile.setFont(font)
         self.menuFile.setObjectName("menuFile")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        main_window.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(main_window)
         self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
-        self.actionOpen_Text_File = QtGui.QAction(MainWindow)
+        main_window.setStatusBar(self.statusbar)
+        self.actionOpen_Text_File = QtGui.QAction(main_window)
         font = QtGui.QFont()
         font.setFamily("TH Sarabun New")
         font.setPointSize(18)
         self.actionOpen_Text_File.setFont(font)
         self.actionOpen_Text_File.setObjectName("actionOpen_Text_File")
-        self.actionOpen_Excel_File = QtGui.QAction(MainWindow)
+        self.actionOpen_Excel_File = QtGui.QAction(main_window)
         font = QtGui.QFont()
         font.setFamily("TH Sarabun New")
         font.setPointSize(18)
@@ -181,8 +182,8 @@ class Ui_MainWindow(object):
         self.menuFile.addAction(self.actionOpen_Excel_File)
         self.menubar.addAction(self.menuFile.menuAction())
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi(main_window)
+        QtCore.QMetaObject.connectSlotsByName(main_window)
 
         self.resetAll()
 
@@ -278,7 +279,7 @@ class Ui_MainWindow(object):
                 try:
                     currentIndex = nameList.index(self.topic_comboBox.currentText())
                     saveItem(currentIndex, newName)
-                except Exception as e:
+                except:
                     saveItem(-1, newName)
             self.resetAll()
 
@@ -295,7 +296,6 @@ class Ui_MainWindow(object):
             self.resetAll()
 
     def selectItem(self, index=None, name=None):
-        # self.resetAll()
         self.listWidget.clear()
         self.listWidget.addItems(reset())
         self.line1.clear()
