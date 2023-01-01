@@ -18,8 +18,3 @@
 4. ไปที่โฟลเดอร์ Zong จากนั้น
 
 ![App Screenshot](https://bl6pap003files.storage.live.com/y4mGXZSXaG-5MSFhGjLEVgADDI_G9VRw0-xuCDdGuN-6XfS8QwSDRlFPeFF1pOuWkBFpriqomFM2ityCQFhVaZC_nOK4otGDfHJkMyqlNIYoHaHdcfFoT-tIsZN-DLgMaQipRiZ9we0JHDC7unZqBW29ONq7koFUOavZcdQVd0mypcZEsBW6knbFK19EkoT6AYz?width=660&height=494&cropmode=none)
-
-
-## วิธีใช้
-
-ฟหฟหฟห
