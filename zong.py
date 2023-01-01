@@ -1,12 +1,40 @@
 import os
 
+import pandas
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import QMessageBox, QInputDialog
-
 from main import reset, selectedItem, printEnvelope, printA4, saveItem, deleteAction, clear
 
 
 class Ui_MainWindow(object):
+
+    def __init__(self):
+        self.actionOpen_Excel_File = None
+        self.actionOpen_Text_File = None
+        self.statusbar = None
+        self.menuFile = None
+        self.menubar = None
+        self.listWidget = None
+        self.label = None
+        self.line5 = None
+        self.line4 = None
+        self.line3 = None
+        self.line2 = None
+        self.line1 = None
+        self.topic_comboBox = None
+        self.label_2 = None
+        self.formLayout = None
+        self.checkBox_2 = None
+        self.checkBox = None
+        self.deleteButton = None
+        self.editButton = None
+        self.resetButton = None
+        self.printButton = None
+        self.verticalLayout = None
+        self.gridLayout = None
+        self.gridLayoutWidget = None
+        self.centralwidget = None
+
     def setupUi(self, main_window):
         main_window.setObjectName("MainWindow")
         main_window.resize(1000, 500)
@@ -196,9 +224,9 @@ class Ui_MainWindow(object):
         self.deleteButton.clicked.connect(self.deleteItem)
         self.listWidget.itemClicked.connect(lambda: self.selectItem(index=self.listWidget.currentRow()))
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self, main_window):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "ซอง"))
+        main_window.setWindowTitle(_translate("MainWindow", "ซอง"))
         self.printButton.setText(_translate("MainWindow", "Print"))
         self.resetButton.setText(_translate("MainWindow", "Reset"))
         self.editButton.setText(_translate("MainWindow", "Edit"))
@@ -234,40 +262,34 @@ class Ui_MainWindow(object):
 
     def printAction(self):
         des_list = reset()
-        try:
-            currentIndex = des_list.index(self.topic_comboBox.currentText())
+        if self.topic_comboBox.currentText() in des_list:
             if self.topic_comboBox.currentText() == 'เพิ่มที่อยู่':
                 return None
-        except:
-            return None
-        name = None
-        if self.checkBox_2.isChecked() is True:
-            name = self.printBox()
-            if name is None:
-                return None
-        if self.checkBox.isChecked():
-            printA4(self.topic_comboBox.currentText(), self.checkBox_2.isChecked(), name)
-        else:
-            printEnvelope(self.topic_comboBox.currentText(), self.checkBox_2.isChecked(), name)
+            name = None
+            if self.checkBox_2.isChecked() is True:
+                name = self.printBox()
+                if name is None:
+                    return None
+            if self.checkBox.isChecked():
+                printA4(self.topic_comboBox.currentText(), self.checkBox_2.isChecked(), name)
+            else:
+                printEnvelope(self.topic_comboBox.currentText(), self.checkBox_2.isChecked(), name)
 
     def editItem(self):
         newName = []
         nameList = reset()
         if self.editButton.text() == 'Edit':
-            try:
-                currentIndex = nameList.index(self.topic_comboBox.currentText())
-            except:
-                return None
-            self.printButton.setDisabled(True)
-            self.deleteButton.setDisabled(True)
-            if self.topic_comboBox.currentText() != 'เพิ่มที่อยู่':
-                self.topic_comboBox.setDisabled(True)
-            self.line1.setDisabled(False)
-            self.line2.setDisabled(False)
-            self.line3.setDisabled(False)
-            self.line4.setDisabled(False)
-            self.line5.setDisabled(False)
-            self.editButton.setText('Save')
+            if self.topic_comboBox.currentText() in nameList:
+                self.printButton.setDisabled(True)
+                self.deleteButton.setDisabled(True)
+                if self.topic_comboBox.currentText() != 'เพิ่มที่อยู่':
+                    self.topic_comboBox.setDisabled(True)
+                self.line1.setDisabled(False)
+                self.line2.setDisabled(False)
+                self.line3.setDisabled(False)
+                self.line4.setDisabled(False)
+                self.line5.setDisabled(False)
+                self.editButton.setText('Save')
         else:
             newName.append(self.topic_comboBox.currentText())
             newName.append(self.line1.text())
@@ -276,24 +298,22 @@ class Ui_MainWindow(object):
             newName.append(self.line4.text())
             newName.append(self.line5.text())
             if self.topic_comboBox.currentText() != 'เพิ่มที่อยู่':
-                try:
+                if self.topic_comboBox.currentText() in nameList:
                     currentIndex = nameList.index(self.topic_comboBox.currentText())
                     saveItem(currentIndex, newName)
-                except:
+                else:
                     saveItem(-1, newName)
-            self.resetAll()
+                self.resetAll()
 
     def deleteItem(self):
         nameList = reset()
-        try:
+        if self.topic_comboBox.currentText() in nameList:
             currentIndex = nameList.index(self.topic_comboBox.currentText())
             if self.topic_comboBox.currentText() == 'เพิ่มที่อยู่' or self.topic_comboBox.currentText() == nameList[0]:
                 return None
-        except:
-            return None
-        if self.deleteBox():
-            deleteAction(currentIndex)
-            self.resetAll()
+            elif self.deleteBox():
+                deleteAction(currentIndex)
+                self.resetAll()
 
     def selectItem(self, index=None, name=None):
         self.listWidget.clear()
@@ -311,35 +331,25 @@ class Ui_MainWindow(object):
         self.editButton.setText('Edit')
 
         name_list = reset()
-        try:
-            if index is not None:
-                data_list = selectedItem(name_list[index])
-            if name is not None:
-                data_list = selectedItem(name)
-            try:
-                self.topic_comboBox.setCurrentText(data_list[0])
-                self.line1.setText(data_list[1])
-                self.line2.setText(data_list[2])
-                self.line3.setText(data_list[3])
-                self.line4.setText(data_list[4])
-                self.line5.setText(data_list[5])
-            except:
-                pass
-        except:
-            self.line1.setText('')
-            self.line2.setText('')
-            self.line3.setText('')
-            self.line4.setText('')
-            self.line5.setText('')
+        data_list = []
+        if index is not None:
+            data_list = selectedItem(name_list[index])
+        if name is not None:
+            data_list = selectedItem(name)
+        for i in range(len(data_list)):
+            if i == 0:
+                self.topic_comboBox.setCurrentText(data_list[i])
+            elif not pandas.isna(data_list[i]):
+                exec(f'self.line{i}.setText("{data_list[i]}")')
 
-    def printBox(self):
+    @staticmethod
+    def printBox():
         msg = QInputDialog()
         font = QtGui.QFont()
         font.setFamily("TH Sarabun New")
         font.setPointSize(18)
         msg.setFont(font)
         msg.setWindowTitle('ชื่อผู้รับ')
-        # msg.labelText('ชื่อผู้รับ')
         x = msg.exec()
         if x:
             return msg.textValue()
