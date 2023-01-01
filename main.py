@@ -14,28 +14,20 @@ def clear():
     for f in os.listdir('tmp'):
         if not f.endswith(".pdf"):
             continue
-        try:
-            os.remove(os.path.join('tmp', f))
-        except:
-            pass
+        os.remove(os.path.join('tmp', f))
 
 
 def reset():
     df = pandas.read_excel('zong.xlsx')
     name_list = []
-    i = 0
-    while True:
-        try:
-            name_list.append(str(df.loc[i][0]))
-            i += 1
-        except:
-            break
+    for i in range(len(df)):
+        name_list.append(str(df.loc[i][0]))
     return name_list
 
 
-def saveItem(index, list):
+def saveItem(index, data_list):
     df = pandas.read_excel('zong.xlsx')
-    df.loc[index] = list
+    df.loc[index] = data_list
     df.to_excel('zong.xlsx', index=False, header=['topic', 'line1', 'line2', 'line3', 'line4', 'line5'])
 
 
@@ -75,19 +67,15 @@ def printEnvelope(des, notSend, name):
     yRect = 175
     xNotsend = 500
     yNotsend = 50
-    for i in range(6):
-        try:
-            c.drawString(xSender, ySender, sender[i + 1])
+    for i in sender[1:]:
+        if not pandas.isna(i):
+            c.drawString(xSender, ySender, i)
             ySender -= 20
-        except:
-            break
     c.drawString(xPreReceiver, yReceiver, 'เรียน')
-    for i in range(6):
-        try:
-            c.drawString(xReceiver, yReceiver, receiver[i + 1])
+    for i in receiver[1:]:
+        if not pandas.isna(i):
+            c.drawString(xReceiver, yReceiver, i)
             yReceiver -= 20
-        except:
-            break
     if notSend is False:
         c.rect(xRect, yRect, 150, 100)
         with open('zong.txt', encoding='utf8') as f:
@@ -131,19 +119,16 @@ def printA4(des, notSend, name):
     spacing = 25
     c.rect(20, 20, 802, 555)
     c.drawImage('garuda.png', 50, y_max - 175, 50, mask='auto', preserveAspectRatio=True)
-    for i in range(6):
-        try:
-            c.drawString(xSender, ySender, sender[i + 1])
+    for i in sender[1:]:
+        if not pandas.isna(i):
+            c.drawString(xSender, ySender, i)
             ySender -= spacing
-        except:
-            break
     c.drawString(xPreReceiver, yReceiver, 'เรียน')
-    for i in range(6):
-        try:
-            c.drawString(xReceiver, yReceiver, receiver[i + 1])
+
+    for i in receiver[1:]:
+        if not pandas.isna(i):
+            c.drawString(xReceiver, yReceiver, i)
             yReceiver -= spacing
-        except:
-            break
     if notSend is False:
         c.rect(xRect, yRect, 200, 100)
         with open('zong.txt', encoding='utf8') as f:
