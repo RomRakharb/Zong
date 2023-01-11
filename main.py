@@ -29,6 +29,7 @@ def saveItem(index, data_list):
     df = pandas.read_excel('zong.xlsx')
     df.loc[index] = data_list
     df.to_excel('zong.xlsx', index=False, header=['topic', 'line1', 'line2', 'line3', 'line4', 'line5'])
+    sort_df()
 
 
 def deleteAction(index):
@@ -142,3 +143,18 @@ def printA4(des, notSend, name):
     shutil.move(str(pathlib.Path().resolve()) + '\\' + filename,
                 str(pathlib.Path().resolve()) + "\\tmp\\" + filename)
     os.startfile(str(pathlib.Path().resolve()) + "\\tmp\\" + filename)
+
+
+def sort_df():
+    df = pandas.read_excel('zong.xlsx')
+    top = df.loc[0:1]
+    add = df.loc[1]
+    df.drop(1, axis=0, inplace=True)
+    df.drop(0, axis=0, inplace=True)
+    sorted_df = df.sort_values('topic')
+    new_df = pandas.concat([top, sorted_df])
+    new_df.to_excel('zong.xlsx', index=False, header=['topic', 'line1', 'line2', 'line3', 'line4', 'line5'])
+
+
+if __name__ == "__main__":
+    pass

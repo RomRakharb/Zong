@@ -1,39 +1,11 @@
 import os
-
 import pandas
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import QMessageBox, QInputDialog
-from main import reset, selectedItem, printEnvelope, printA4, saveItem, deleteAction, clear
+from main import reset, selectedItem, printEnvelope, printA4, saveItem, deleteAction, clear, sort_df
 
 
 class Ui_MainWindow(object):
-
-    def __init__(self):
-        self.actionOpen_Excel_File = None
-        self.actionOpen_Text_File = None
-        self.statusbar = None
-        self.menuFile = None
-        self.menubar = None
-        self.listWidget = None
-        self.label = None
-        self.line5 = None
-        self.line4 = None
-        self.line3 = None
-        self.line2 = None
-        self.line1 = None
-        self.topic_comboBox = None
-        self.label_2 = None
-        self.formLayout = None
-        self.checkBox_2 = None
-        self.checkBox = None
-        self.deleteButton = None
-        self.editButton = None
-        self.resetButton = None
-        self.printButton = None
-        self.verticalLayout = None
-        self.gridLayout = None
-        self.gridLayoutWidget = None
-        self.centralwidget = None
 
     def setupUi(self, main_window):
         main_window.setObjectName("MainWindow")
@@ -213,6 +185,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(main_window)
         QtCore.QMetaObject.connectSlotsByName(main_window)
 
+        sort_df()
         self.resetAll()
 
         self.actionOpen_Text_File.triggered.connect(lambda: os.startfile('zong.txt'))
