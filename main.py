@@ -29,7 +29,6 @@ def saveItem(index, data_list):
     df = pandas.read_excel('zong.xlsx')
     df.loc[index] = data_list
     df.to_excel('zong.xlsx', index=False, header=['topic', 'line1', 'line2', 'line3', 'line4', 'line5'])
-    sort_df()
 
 
 def deleteAction(index):
@@ -90,6 +89,7 @@ def printEnvelope(des, notSend, name):
     shutil.move(str(pathlib.Path().resolve()) + '\\' + filename,
                 str(pathlib.Path().resolve()) + "\\tmp\\" + filename)
     os.startfile(str(pathlib.Path().resolve()) + "\\tmp\\" + filename)
+    sort_df(des)
 
 
 def printA4(des, notSend, name):
@@ -143,16 +143,27 @@ def printA4(des, notSend, name):
     shutil.move(str(pathlib.Path().resolve()) + '\\' + filename,
                 str(pathlib.Path().resolve()) + "\\tmp\\" + filename)
     os.startfile(str(pathlib.Path().resolve()) + "\\tmp\\" + filename)
+    sort_df(des)
 
-
-def sort_df():
+def sort_df(des):
+    name_list = reset()
     df = pandas.read_excel('zong.xlsx')
     top = df.loc[0:1]
-    add = df.loc[1]
     df.drop(1, axis=0, inplace=True)
     df.drop(0, axis=0, inplace=True)
-    sorted_df = df.sort_values('topic')
-    new_df = pandas.concat([top, sorted_df])
+    receiver = df.loc[name_list.index(des)]
+    receiver_data = {
+        "topic" : [receiver.iloc[0]],
+        "line1" : [receiver.iloc[1]],
+        "line2": [receiver.iloc[2]],
+        "line3": [receiver.iloc[3]],
+        "line4": [receiver.iloc[4]],
+        "line5": [receiver.iloc[5]]
+    }
+    receiver_df = pandas.DataFrame(receiver_data)
+    df.drop(name_list.index(des), axis=0, inplace=True)
+    new_df = pandas.concat([top, receiver_df, df])
+    print(new_df)
     new_df.to_excel('zong.xlsx', index=False, header=['topic', 'line1', 'line2', 'line3', 'line4', 'line5'])
 
 

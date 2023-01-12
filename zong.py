@@ -2,7 +2,7 @@ import os
 import pandas
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import QMessageBox, QInputDialog
-from main import reset, selectedItem, printEnvelope, printA4, saveItem, deleteAction, clear, sort_df
+from main import reset, selectedItem, printEnvelope, printA4, saveItem, deleteAction, clear
 
 
 class Ui_MainWindow(object):
@@ -185,7 +185,6 @@ class Ui_MainWindow(object):
         self.retranslateUi(main_window)
         QtCore.QMetaObject.connectSlotsByName(main_window)
 
-        sort_df()
         self.resetAll()
 
         self.actionOpen_Text_File.triggered.connect(lambda: os.startfile('zong.txt'))
@@ -247,6 +246,8 @@ class Ui_MainWindow(object):
                 printA4(self.topic_comboBox.currentText(), self.checkBox_2.isChecked(), name)
             else:
                 printEnvelope(self.topic_comboBox.currentText(), self.checkBox_2.isChecked(), name)
+            self.listWidget.clear()
+            self.listWidget.addItems(reset())
 
     def editItem(self):
         newName = []
