@@ -2,7 +2,7 @@ import os
 import pandas
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import QMessageBox, QInputDialog
-from main import reset, selectedItem, printEnvelope, printA4, saveItem, deleteAction, clear
+from main import reset, selectedItem, printEnvelope, printA4, saveItem, deleteAction, clear, sort_df
 
 
 class Ui_MainWindow(object):
@@ -186,6 +186,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(main_window)
 
         self.resetAll()
+        sort_df()
 
         self.actionOpen_Text_File.triggered.connect(lambda: os.startfile('zong.txt'))
         self.actionOpen_Excel_File.triggered.connect(lambda: os.startfile('zong.xlsx'))
