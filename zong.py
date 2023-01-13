@@ -311,11 +311,11 @@ class Ui_MainWindow(object):
             data_list = selectedItem(name_list[index])
         if name is not None:
             data_list = selectedItem(name)
-        for i in range(len(data_list)):
+        for i, data in enumerate(data_list):
             if i == 0:
-                self.topic_comboBox.setCurrentText(data_list[i])
-            elif not pandas.isna(data_list[i]):
-                exec(f'self.line{i}.setText("{data_list[i]}")')
+                self.topic_comboBox.setCurrentText(data)
+            elif not pandas.isna(data):
+                exec(f'self.line{i}.setText("{data}")')
 
     @staticmethod
     def printBox():

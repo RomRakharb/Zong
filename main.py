@@ -20,8 +20,8 @@ def clear():
 def reset():
     df = pandas.read_excel('zong.xlsx')
     name_list = []
-    for i in range(len(df)):
-        name_list.append(str(df.loc[i][0]))
+    for data in df.itertuples():
+        name_list.append(data[1])
     return name_list
 
 
